@@ -6,11 +6,14 @@ import org.jenkinsci.plugins.plaincredentials.impl.*
 
 
 // Read the webhook from a secret mount
-def secretFilePath = "/secrets/github/webhook"
+def secretFilePath = "/secrets/github-webhook/webhook"
 def file = new File(secretFilePath)
 String webhook = "https://github.com/default-webhook"
 if(file.exists()) {
+  println('webhook file exists')
   webhook = file.text
+} else {
+  println('webhook file does not exist')
 }
 
 

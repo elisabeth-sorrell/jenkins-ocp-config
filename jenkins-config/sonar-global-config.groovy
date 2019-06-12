@@ -6,18 +6,42 @@ import hudson.plugins.sonar.model.*
 // Can be used with the jenkins CLI by calling
 // java -jar jenkins-cli.jar groovy sonar_global_config.groovy
 
+
+def sonarQubeName = "SonarQube"
+def sonarqubeUrl = "http://some-sonar-server:9000"
+def sonarToken = "defaultToken"
+def sonarlAdditionalProperties = ""
+
+def env = System.getenv()
+
+if(env['SONARQUBE_NAME']) {
+  sonarQubeName = env['SONARQUBE_NAME']
+}
+
+if(env['SONARQUBE_URL']) {
+  sonarqubeUrl = env['SONARQUBE_URL']
+}
+
+if(env['SONARQUBE_TOKEN']){
+  sonarToken = env['SONARQUBE_TOKEN']
+}
+
+if(env['SONARQUBE_ADDITIONAL_PROPERTIES']) {
+  sonarlAdditionalProperties = env['SONARQUBE_ADDITIONAL_PROPERTIES']
+}
+
 def inst = Jenkins.getInstance()
 
 def desc = inst.getDescriptor("hudson.plugins.sonar.SonarGlobalConfiguration")
 
 def sinst = new SonarInstallation(
-  "SonarQube",   // name
-  "http://some-sonar-server:9000",      // serverUrl
-  "someToken",   // serverAuthenticationToken
+  sonarQubeName,
+  sonarqubeUrl,
+  sonarToken,
   "",  // mojoVersion
-  "-Djavax.net.ssl.trustStore=/secrets/va-cacerts -Djavax.net.ssl.trustStorePassword=changeit -X -Djavax.net.debug=\"ssl,handshake\"",  // additionalProperties
+  sonarlAdditionalProperties,
   new TriggersConfig(),  // triggers
-  ""  // AdditionalAnalysisProperties
+  ""  
 )
 desc.setInstallations(sinst)
 
