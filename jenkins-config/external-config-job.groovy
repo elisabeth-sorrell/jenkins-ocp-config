@@ -18,7 +18,7 @@ import jenkins.scm.impl.trait.*
 def env = System.getenv()
 
 // Bring some values in from ansible using the jenkins_script modules wierd "args" approach (these are not gstrings)
-String jobName = (env['EXTERNAL_CONFIG_JOB_NAME']) ? env['EXTERNAL_CONFIG_JOB_NAME'] : ''
+String jobName = (env['EXTERNAL_CONFIG_JOB_NAME']) ? env['EXTERNAL_CONFIG_JOB_NAME'] : 'bip-external-config'
 String jobScript = (env['EXTERNAL_CONFIG_JOB_SCRIPT_PATH']) ? env['EXTERNAL_CONFIG_JOB_SCRIPT_PATH'] : 'Jenkinsfile'
 String gitRepo = (env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : 'https://github.com/default-app-endpoint/v2'
 String gitRepoName = (env['EXTERNAL_CONFIG_REPO_NAME']) ? env['EXTERNAL_CONFIG_REPO_NAME'] : 'external-repo'
