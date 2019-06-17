@@ -11,7 +11,7 @@ def secretPasswordFilePath = "/secrets/nexus/password"
 def usernameFile = new File(secretUsernameFilePath)
 def passwordFile = new File(secretPasswordFilePath)
 
-String username = "default"
+String username = "nexus"
 String password = "password"
 
 if(usernameFile.exists()) {
@@ -22,12 +22,12 @@ if (passwordFile.exists()) {
   password = passwordFile.text
 }
 
-
+def env = System.getenv()
 
 // parameters
 def jenkinsKeyUsernameWithPasswordParameters = [
-  description:  'Nexus username and password authentication',
-  id:           'nexus-auth',
+  description:  ((env['NEXUS_CREDENTIAL_DESCRIPTION']) ? env['NEXUS_CREDENTIAL_DESCRIPTION'] : 'Username and Password for Nexus'),
+  id:           ((env['NEXUS_CREDENTIAL_ID']) ? env['NEXUS_CREDENTIAL_ID'] : 'nexus'),
   secret:       password,
   userName:     username
 ]

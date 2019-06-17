@@ -12,11 +12,12 @@ if(tokenFile.exists()) {
   token = tokenFile.text
 }
 
-// setup parameters
+def env = System.getenv()
 
+// setup parameters
 def jenkinsSecretTextParameters = [
-  description: 'Token for Slack Authentication',
-  id:          'slack-token',
+  description: ((env['SLACK_CREDENTIAL_DESCRIPTION']) ? env['SLACK_CREDENTIAL_DESCRIPTION'] : 'Slack token for authentication to webhook'),
+  id:          ((env['SLACK_CREDENTIAL_ID']) ? env['SLACK_CREDENTIAL_ID'] : 'slack-token'),
   secret:      token
 ]
 

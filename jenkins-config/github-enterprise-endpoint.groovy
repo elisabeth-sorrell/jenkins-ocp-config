@@ -4,16 +4,9 @@ import java.util.*;
 
 
 def env = System.getenv()
-def apiEndpoint = "https://github.com/default-endpoint/v2"
-def apiDescription = "Default Description"
+def apiEndpoint = (env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : 'https://api.github.com/v3'
+def apiDescription = (env['GITHUB_API_ENDPOINT_DESCRIPTION']) ? env['GITHUB_API_ENDPOINT_DESCRIPTION'] : 'Default Description'
 
-if(env['GITHUB_API_ENDPOINT']) {
-  apiEndpoint = env['GITHUB_API_ENDPOINT']
-}
-
-if(env['GITHUB_API_ENDPOINT_DESCRIPTION']) {
-  apiDescription = env['GITHUB_API_ENDPOINT_DESCRIPTION']
-}
 
 GitHubConfiguration gitHubConfig = GlobalConfiguration.all().get(GitHubConfiguration.class)
 Endpoint gheApiEndpoint = new Endpoint(apiEndpoint, apiDescription)

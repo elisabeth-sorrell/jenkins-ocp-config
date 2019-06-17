@@ -8,25 +8,10 @@ import org.jenkinsci.plugins.workflow.libs.SCMSourceRetriever
 
 def env = System.getenv()
 
-def githubCred = 'default-github-cred-id'
-if(env['GITHUB_CREDENTIAL_ID']) {
-  githubCred = env['GITHUB_CREDENTIAL_ID']
-}
-
-def branch = "master"
-if(env['GLOBAL_CONFIG_BRANCH']) {
-  branch = env['GLOBAL_CONFIG_BRANCH']
-}
-
-def globalLibraryName = "global-jenkins-lib"
-if(env['GLOBAL_LIBRARY_NAME']) {
-  globalLibraryName = env['GLOBAL_LIBRARY_NAME']
-}
-
-def globalLibraryRepo = "https://github.com/some-default-repo-that-dont-exist.git"
-if(env['GLOBAL_LIBRARY_REPO']) {
-  globalLibraryRepo = env['GLOBAL_LIBRARY_REPO']
-}
+def githubCred = ((env['GITHUB_BASIC_CRED_ID']) ? env['GITHUB_BASIC_CRED_ID'] : 'github')
+def branch = ((env['GLOBAL_CONFIG_BRANCH']) ? env['GLOBAL_CONFIG_BRANCH'] : 'master')
+def globalLibraryName = ((env['GLOBAL_LIBRARY_NAME']) ? env['GLOBAL_LIBRARY_NAME'] : 'bip-jenkins-lib')
+def globalLibraryRepo = ((env['GLOBAL_LIBRARY_REPO']) ? env['GLOBAL_LIBRARY_REPO'] : 'https://github.ec.va.gov/EPMO/bip-jenkins-lib.git')
 
 // parameters
 def globalLibrariesParameters = [

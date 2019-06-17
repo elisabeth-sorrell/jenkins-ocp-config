@@ -8,19 +8,20 @@ import org.jenkinsci.plugins.plaincredentials.impl.*
 // Read the webhook from a secret mount
 def secretFilePath = "/secrets/github-webhook/webhook"
 def file = new File(secretFilePath)
-String webhook = "https://github.com/default-webhook"
+String webhook = "somerandomdefaulttoken"
 if(file.exists()) {
-  println('webhook file exists')
   webhook = file.text
-} else {
-  println('webhook file does not exist')
 }
 
+def env = System.getenv()
+
+def webhookId = (env['GITHUB_WEBHOOK_ID']) ? env['GITHUB_WEBHOOK_ID'] : 'github-webhook'
+def webhookDescription = (env['GITHUB_WEBHOOK_DESCRIPTION']) ? env['GITHUB_WEBHOOK_DESCRIPTION'] : 'Webhook for Github'
 
 // setup parameters
 def jenkinsSecretTextParameters = [
-  description: 'Webhook for Github',
-  id:          'github-webhook',
+  description: webhookDescription,
+  id:          webhookId,
   secret:      webhook
 ]
 

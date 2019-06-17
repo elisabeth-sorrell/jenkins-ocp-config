@@ -34,11 +34,12 @@ if (secretPrivateKeyFile.exists()) {
   privateKey = secretPrivateKeyFile.text
 }
 
+def env = System.getenv()
 
 // parameters
 def jenkinsMasterKeyParameters = [
   description:  'SSH Private key for Github',
-  id:           'github-private-key',
+  id:           ((env['GITHUB_SSH_ID']) ? env['GITHUB_SSH_ID'] : 'github-ssh'),
   secret:       password,
   userName:     username,
   key:          new BasicSSHUserPrivateKey.DirectEntryPrivateKeySource(privateKey)

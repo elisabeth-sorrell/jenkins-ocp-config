@@ -22,16 +22,12 @@ if (passwordFile.exists()) {
   password = passwordFile.text
 }
 
-def githubId = "default-github-auth"
 def env = System.getenv()
-if(env['GITHUB_CREDENTIAL_ID']) {
-  githubId = env['GITHUB_CREDENTIAL_ID']
-}
-
+def githubId = ((env['GITHUB_BASIC_CRED_ID']) ? env['GITHUB_BASIC_CRED_ID'] : 'github')
 
 // parameters
 def jenkinsKeyUsernameWithPasswordParameters = [
-  description:  'Authentication to Github with username and password',
+  description:  ((env['GITHUB_BASIC_CRED_DESCRIPTION']) ? env['GITHUB_BASIC_CRED_DESCRIPTION'] : 'Username/Password for Github Authentication'),
   id:           githubId,
   secret:       password,
   userName:     username
