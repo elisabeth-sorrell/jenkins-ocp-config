@@ -10,14 +10,14 @@ def env = System.getenv()
 
 def githubCred = ((env['GITHUB_BASIC_CRED_ID']) ? env['GITHUB_BASIC_CRED_ID'] : 'github')
 def branch = ((env['GLOBAL_CONFIG_BRANCH']) ? env['GLOBAL_CONFIG_BRANCH'] : 'master')
-def globalLibraryName = ((env['GLOBAL_LIBRARY_NAME']) ? env['GLOBAL_LIBRARY_NAME'] : 'bip-jenkins-lib')
-def globalLibraryRepo = ((env['GLOBAL_LIBRARY_REPO']) ? env['GLOBAL_LIBRARY_REPO'] : 'https://github.ec.va.gov/EPMO/bip-jenkins-lib.git')
+def globalLibraryName = ((env['GLOBAL_LIBRARY_NAME']) ? env['GLOBAL_LIBRARY_NAME'] : '..........')
+def globalLibraryRepo = ((env['GLOBAL_LIBRARY_REPO']) ? env['GLOBAL_LIBRARY_REPO'] : '..........')
 
 // parameters
 def globalLibrariesParameters = [
   branch:               branch,
   credentialId:         githubCred,
-  implicit:             false,
+  implicit:             true,
   name:                 globalLibraryName,
   repository:           globalLibraryRepo
 ]

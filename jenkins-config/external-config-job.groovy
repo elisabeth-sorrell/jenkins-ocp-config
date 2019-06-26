@@ -15,16 +15,16 @@ import jenkins.scm.api.SCMRevision
 import jenkins.scm.api.SCMHead
 import jenkins.scm.impl.trait.*
 
+
 def env = System.getenv()
 
-// Bring some values in from ansible using the jenkins_script modules wierd "args" approach (these are not gstrings)
-String jobName = (env['EXTERNAL_CONFIG_JOB_NAME']) ? env['EXTERNAL_CONFIG_JOB_NAME'] : 'bip-external-config'
+String jobName = (env['EXTERNAL_CONFIG_JOB_NAME']) ? env['EXTERNAL_CONFIG_JOB_NAME'] : '..........'
 String jobScript = (env['EXTERNAL_CONFIG_JOB_SCRIPT_PATH']) ? env['EXTERNAL_CONFIG_JOB_SCRIPT_PATH'] : 'Jenkinsfile'
-String gitRepo = (env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : 'https://github.com/default-app-endpoint/v2'
-String gitRepoName = (env['EXTERNAL_CONFIG_REPO_NAME']) ? env['EXTERNAL_CONFIG_REPO_NAME'] : 'external-repo'
-String credentialsId = (env['GITHUB_CREDENTIAL_ID']) ? env['GITHUB_CREDENTIAL_ID'] : 'default-github-auth'
-String githubRepoOwner = (env['GITHUB_REPO_OWNER']) ? env['GITHUB_REPO_OWNER'] : 'default-owner'
-String scmFilterRegex = (env['EXTERNAL_CONFIG_SCM_FILTER_REGEX']) ? env['EXTERNAL_CONFIG_SCM_FILTER_REGEX'] : '(master|development|PR-.*)'
+String gitRepoName = (env['EXTERNAL_CONFIG_REPO_NAME']) ? env['EXTERNAL_CONFIG_REPO_NAME'] : '..........'
+String gitAPIEndpoint = (env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : '..........'
+String credentialsId = (env['GITHUB_BASIC_CRED_ID']) ? env['GITHUB_BASIC_CRED_ID'] : 'github'
+String githubRepoOwner = (env['GITHUB_REPO_OWNER']) ? env['GITHUB_REPO_OWNER'] : '..........'
+String scmFilterRegex = (env['EXTERNAL_CONFIG_SCM_FILTER_REGEX']) ? env['EXTERNAL_CONFIG_SCM_FILTER_REGEX'] : 'master'
 
 
 Jenkins jenkins = Jenkins.instance // saves some typing
@@ -35,13 +35,11 @@ WorkflowMultiBranchProject mbp = jenkins.createProject(WorkflowMultiBranchProjec
 // Configure the script this MBP uses
 mbp.getProjectFactory().setScriptPath(jobScript)
 
+
 // Add git repo
-String id = null
-String remote = gitRepo
-String includes = "*"
-String excludes = ""
-boolean ignoreOnPushNotifications = false
-GitHubSCMSource gitSCMSource = new GitHubSCMSource(githubRepoOwner, remote)
+GitHubSCMSource gitSCMSource = new GitHubSCMSource(githubRepoOwner, gitRepoName)
+gitSCMSource.setCredentialsId(credentialsId)
+gitSCMSource.setApiUri(gitAPIEndpoint)
 BranchSource branchSource = new BranchSource(gitSCMSource)
 
 gitSCMSource.traits.add(new BranchDiscoveryTrait(true, false))

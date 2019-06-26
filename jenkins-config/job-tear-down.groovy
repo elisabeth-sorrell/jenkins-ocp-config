@@ -18,10 +18,10 @@ import jenkins.scm.impl.trait.*
 def env = System.getenv()
 String jobName = (env['TEAR_DOWN_JOB_NAME']) ? env['TEAR_DOWN_JOB_NAME'] : 'job-tear-down-executor'
 String jobScript = (env['TEAR_DOWN_JOB_SCRIPT_PATH']) ? env['TEAR_DOWN_JOB_SCRIPT_PATH'] : 'Jenkinsfile.tearDown'
-String gitRepo = (env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : 'https://github.com/default-app-endpoint/v2'
-//String gitRepoName = (env['TEAR_DOWN_REPO_NAME']) ? env['TEAR_DOWN_REPO_NAME'] : 'teardown-repo'
+String gitRepoName = (env['TEAR_DOWN_REPO_NAME']) ? env['TEAR_DOWN_REPO_NAME'] : '..........'
+String gitAPIEndpoint = (env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : '..........'
 String credentialsId = (env['GITHUB_BASIC_CRED_ID']) ? env['GITHUB_BASIC_CRED_ID'] : 'github'
-String githubRepoOwner = (env['GITHUB_REPO_OWNER']) ? env['GITHUB_REPO_OWNER'] : 'default-owner'
+String githubRepoOwner = (env['GITHUB_REPO_OWNER']) ? env['GITHUB_REPO_OWNER'] : '..........'
 String scmFilterRegex = (env['TEAR_DOWN_SCM_FILTER_REGEX']) ? env['TEAR_DOWN_SCM_FILTER_REGEX'] : 'master'
 
 
@@ -34,8 +34,9 @@ WorkflowMultiBranchProject mbp = jenkins.createProject(WorkflowMultiBranchProjec
 mbp.getProjectFactory().setScriptPath(jobScript)
 
 // Add git repo
-boolean ignoreOnPushNotifications = false
-GitHubSCMSource gitSCMSource = new GitHubSCMSource(githubRepoOwner, gitRepo)
+GitHubSCMSource gitSCMSource = new GitHubSCMSource(githubRepoOwner, gitRepoName)
+gitSCMSource.setCredentialsId(credentialsId)
+gitSCMSource.setApiUri(gitAPIEndpoint)
 BranchSource branchSource = new BranchSource(gitSCMSource)
 
 gitSCMSource.traits.add(new BranchDiscoveryTrait(true, false))

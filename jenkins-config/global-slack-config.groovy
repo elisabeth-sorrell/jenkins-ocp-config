@@ -1,15 +1,15 @@
 import jenkins.model.Jenkins
-
+import jenkins.plugins.slack.SlackNotifier.DescriptorImpl
 
 Jenkins jenkins = Jenkins.getInstance()
 def env = System.getenv()
 
 def slack = jenkins.getExtensionList(
-        jenkins.plugins.slack.SlackNotifier.DescriptorImpl.class
+        jenkins.plugins.slack.SlackNotifier.DescriptorImpl
     )[0]
 
 // Setup most of the configuration for slack
-slack.baseUrl = ((env['SLACK_BASE_URL']) ? env['SLACK_BASE_URL'] : 'https://bipva.slack.com')
+slack.baseUrl = ((env['SLACK_BASE_URL']) ? env['SLACK_BASE_URL'] : '..........')
 slack.teamDomain = ((env['SLACK_TEAM_DOMAIN']) ? env['SLACK_TEAM_DOMAIN'] : 'bipva')
 slack.tokenCredentialId = ((env['SLACK_CREDENTIAL_ID']) ? env['SLACK_CREDENTIAL_ID'] : 'slack-token')
 slack.botUser = true

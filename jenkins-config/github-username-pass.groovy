@@ -11,7 +11,7 @@ def secretPasswordFilePath = "/secrets/github/password"
 def usernameFile = new File(secretUsernameFilePath)
 def passwordFile = new File(secretPasswordFilePath)
 
-String username = "default"
+String username = "user"
 String password = "password"
 
 if(usernameFile.exists()) {

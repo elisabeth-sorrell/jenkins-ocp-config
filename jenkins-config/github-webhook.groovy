@@ -16,7 +16,7 @@ if(file.exists()) {
 def env = System.getenv()
 
 def webhookId = (env['GITHUB_WEBHOOK_ID']) ? env['GITHUB_WEBHOOK_ID'] : 'github-webhook'
-def webhookDescription = (env['GITHUB_WEBHOOK_DESCRIPTION']) ? env['GITHUB_WEBHOOK_DESCRIPTION'] : 'Webhook for Github'
+def webhookDescription = (env['GITHUB_WEBHOOK_DESCRIPTION']) ? env['GITHUB_WEBHOOK_DESCRIPTION'] : 'Token for Github webhook authentication'
 
 // setup parameters
 def jenkinsSecretTextParameters = [

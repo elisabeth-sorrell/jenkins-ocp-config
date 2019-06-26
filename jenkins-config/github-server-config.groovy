@@ -12,8 +12,8 @@ jenkinsGitConfig = jenkins.getDescriptor("github-plugin-configuration")
 
 GitHubServerConfig config = new GitHubServerConfig((env['GITHUB_WEBHOOK_ID']) ? env['GITHUB_WEBHOOK_ID'] : 'github-webhook')
 
-config.setName(((env['GITHUB_SERVER_CONFIG_NAME']) ? env['GITHUB_SERVER_CONFIG_NAME'] : 'default'))
-config.setApiUrl(((env['GITHUB_API_URL']) ? env['GITHUB_API_URL'] : 'https://api.github.com/v3'))
+config.setName(((env['GITHUB_SERVER_CONFIG_NAME']) ? env['GITHUB_SERVER_CONFIG_NAME'] : 'EPMO Github Server'))
+config.setApiUrl(((env['GITHUB_API_ENDPOINT']) ? env['GITHUB_API_ENDPOINT'] : '..........'))
 config.setManageHooks(true)
 
 jenkinsGitConfig.setConfigs([config])
